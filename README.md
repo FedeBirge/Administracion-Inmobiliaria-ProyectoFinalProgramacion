@@ -3,7 +3,9 @@ GRUPO 7
 Integrantes:
 
 Ferreyra Maria Luciana
-Birge, Adolfo Federico
+
+Birge Adolfo Federico
+
 Emma Vilma Gutierrez
 
 ![TRABAJO INTEGRADOR_page-0001](https://user-images.githubusercontent.com/109010330/196325865-822c054a-4f9d-4454-989e-88fb50abc630.jpg)
