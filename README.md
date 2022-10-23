@@ -1,6 +1,6 @@
 GRUPO 8
 
-### **Integrantes**
+INTEGRANTES
 
 ❖ Birge, Adolfo Federico.<br />
 ❖ Ferreyra, María Luciana.<br />
