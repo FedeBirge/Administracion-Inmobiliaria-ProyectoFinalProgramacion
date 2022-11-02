@@ -87,7 +87,62 @@ class propiedad:   # Creamos la clase Propiedad
                 print(
                     "Error al listar las propiedades disponibles para alquiler: ", str(e))
 
-   
+# Metodo para eliminar una propiedad(opcion 4 del menu)
+    def eliminarPropiedad(self):
+        cone = conexion()
+        prop = propiedad()
+        if cone.conectado:
+            try:
+                print("***** ESPACIO PARA ELIMINAR UNA PROPIEDAD *****")
+                print()
+                prop.ListarPropiedades()  # llamamos al metodo para listar las propiedades
+                print()
+                salir = False
+                while not salir:
+                    cursor = cone.conexion.cursor()
+                    cursor.execute("SELECT Id_Propiedad FROM Propiedad")
+                    lista = cursor.fetchall()
+                    MiListaId = []
+                    for x in lista:
+                        MiListaId.append(x[0])
+                    MiListaId.sort()
+                    id = int(
+                        input("Ingrese el ID de la propiedad que desea eliminar: "))
+                    if id in MiListaId:
+                        sql = "DELETE FROM Propiedad WHERE Id_Propiedad='{}'".format(
+                            id)
+                        cursor = cone.conexion.cursor()
+                        cursor.execute(sql)
+                        cone.conexion.commit()
+                        print()
+                        print("PROPIEDAD ELIMINADA CON EXITO")
+                        salir = True
+                    else:
+                        print("El ID ingresado no existe.")
+                        print('Estas son las opciones disponibles: ', end=' ')
+                        for i in MiListaId:
+                            print(i, end=' ')
+                        print()
+            except Exception as e:
+                print("Error al eliminar la propiedad")
+
+def ListarPropiedades(self):
+        cone = conexion()
+        if cone.conectado():
+            try:
+                cursor = cone.conexion.cursor()
+                cursor.execute("SELECT Id_Propiedad, Ambientes, P.Direccion, Localidad, Nombre, Pro.Direccion, Contacto, Nombre_tipo, Nombre_Estado, Nombre_Operatoria_Comercial FROM Propiedad as P JOIN Propietario as Pro on P.Id_Propietario=Pro.Id_Propietario JOIN Tipo as T on P.Id_Tipo=T.Id_Tipo JOIN Estado as E on P.Id_Estado=E.Id_Estado JOIN OperatoriaComercial as O on P.Id_Operacion_Comercial=O.Id_Operatoria_Comercial")
+                lista = cursor.fetchall()
+                head = ['Id', 'Tipo', 'Estado', 'Operatoria', 'Ambientes', 'Direccion',
+                        'Localidad', 'Dueño', 'Direccion', 'Contacto', ]
+                tabla = []
+                for x in lista:
+                    tabla.append([x[0], x[7], x[8], x[9], x[1],
+                                 x[2], x[3], x[4], x[5], x[6]])
+                tabla.sort()
+                print(tabulate(tabla, tablefmt="fancy_outline", headers=head))
+            except Exception as e:
+                print("Error al listar todas las propiedades: ", str(e))   
 
 if __name__ == '__main__':
     print("Soy la Clase Propiedad")
