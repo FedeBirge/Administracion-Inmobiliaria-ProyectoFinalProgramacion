@@ -1,9 +1,15 @@
-class propietario:
+
+import sys
+sys.path.append(r"..\\Inmobiliaria")
+from Conexion.conexionbd import conexion  # importar la clase conexion
+from tabulate import tabulate
+
+class propietario: # Clase propietario 
     Nombre = ""
     Direccion = ""
     Contacto = 0
 
-    def __init__(self, nombre, direccion, contacto):
+    def __init__(self, nombre='', direccion='', contacto=0):
         self.Nombre = nombre
         self.Direccion = direccion
         self.Contacto = contacto

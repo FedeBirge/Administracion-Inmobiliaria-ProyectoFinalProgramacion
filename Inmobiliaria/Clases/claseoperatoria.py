@@ -1,7 +1,9 @@
+
+from os import system
 class operatoria:
     NombreOp = ""
 
-    def __init__(self, nombre):
+    def __init__(self, nombre=''):
         self.NombreOp = nombre
 
     def getNombreOp(self):
@@ -11,8 +13,9 @@ class operatoria:
         self.NombreOp = nombre
 
     def __str__(self):
-        return "Nombre: "+self.NombreOp
+        return str(self.NombreOp)
 
-
+   
+        
 if __name__ == '__main__':
     print("Soy la Clase Operatoria")
