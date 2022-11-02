@@ -1,34 +1,93 @@
-class propiedad:
-    Nombre = ""
-    Direccion = ""
-    Contacto = 0
 
-    def __init__(self, nombre, direccion, contacto):
-        self.Nombre = nombre
+import sys
+
+sys.path.append(r"..\\Inmobiliaria")
+sys.path.append(r"..\\Inmobiliaria\\Clases")
+from Conexion.conexionbd import conexion  # importar la clase conexion
+from claseoperatoria import operatoria  # importar la clase operatoria
+from claseestado import estado  # importamos la clase Estado
+from clasetipo import tipo  # importamos la clase Tipo
+from clasepropietario import propietario
+
+from tabulate import tabulate
+from os import system
+import time
+
+
+class propiedad:   # Creamos la clase Propiedad
+    Ambientes = 0  # Creamos los atributos de la clase
+    Direccion = " "  # Atrbuto direccion de la clase Propiedad
+    Localidad = ""  # Atributo localidad de la clase Propiedad
+
+    # Constructor de la clase Propiedad
+    def __init__(self, ambientes=0, direccion='', localidad=""):
+        self.Ambientes = ambientes
         self.Direccion = direccion
-        self.Contacto = contacto
+        self.Localidad = localidad
 
-    def getNombre(self):
-        return self.Nombre
+    def getAmbientes(self):  # Metodo para obtener los ambientes de la propiedad
+        return self.Ambientes
 
-    def getDireccion(self):
+    def getDireccion(self):  # Metodo para obtener la direccion de la propiedad
         return self.Direccion
 
-    def getContacto(self):
-        return self.Contacto
+    def getLocalidad(self):  # Metodo para obtener la localidad de la propiedad
+        return self.Localidad
 
-    def setNombre(self, nombre):
-        self.Nombre = nombre
+    def setAmbientes(self, ambientes):  # Metodo para asignar los ambientes de la propiedad
+        self.Ambientes = ambientes
 
-    def setDireccion(self, direccion):
+    def setDireccion(self, direccion):  # Metodo para asignar la direccion de la propiedad
         self.Direccion = direccion
 
-    def setContacto(self, contacto):
-        self.Contacto = contacto
+    def setLocalidad(self, localidad):  # Metodo para asignar la localidad de la propiedad
+        self.Localidad = localidad
 
-    def __str__(self):
-        return "Nombre: "+self.Nombre+" Direccion: "+self.Direccion+" Contacto: "+str(self.Contacto)
+    def __str__(self):  # Metodo para mostrar los datos de la propiedad
+        return "Ambientes: " + str(self.Ambientes)+" Direccion: "+self.Direccion+" Localidad: "+str(self.Localidad)
 
+
+    # Metodo para listar las prop disponibles para venta(opcion 6 del menu)
+    def ListarPropiedadesDispVenta(self):
+        cone = conexion()
+        if cone.conectado():
+            try:
+                cursor = cone.conexion.cursor()
+                cursor.execute("SELECT Id_Propiedad, Ambientes, P.Direccion, Localidad, Nombre, Pro.Direccion, Contacto, Nombre_tipo, Nombre_Estado, Nombre_Operatoria_Comercial FROM Propiedad as P JOIN Propietario as Pro on P.Id_Propietario=Pro.Id_Propietario JOIN Tipo as T on P.Id_Tipo=T.Id_Tipo JOIN Estado as E on P.Id_Estado=E.Id_Estado JOIN OperatoriaComercial as O on P.Id_Operacion_Comercial=O.Id_Operatoria_Comercial WHERE P.Id_Estado= 1 AND P.Id_Operacion_Comercial= 2 ")
+                lista = cursor.fetchall()
+                head = ['Id', 'Tipo', 'Estado', 'Operatoria', 'Ambientes', 'Direccion',
+                        'Localidad', 'Dueño', 'Direccion', 'Contacto', ]
+                tabla = []
+                for x in lista:
+                    tabla.append([x[0], x[7], x[8], x[9], x[1],
+                                  x[2], x[3], x[4], x[5], x[6]])
+                print(tabulate(tabla, tablefmt="fancy_outline", headers=head))
+            except Exception as e:
+                print("Error al listar las propiedades disponibles para venta: ", str(e))
+
+    # Metodo para listar las prop disponibles para alquiler(opcion 7 del menu)
+    def ListarPropiedadesDispAlquiler(self):
+        cone = conexion()
+        if cone.conectado():
+            try:
+
+                cursor = cone.conexion.cursor()
+                cursor.execute("SELECT Id_Propiedad, Ambientes, P.Direccion, Localidad, Nombre, Pro.Direccion, Contacto, Nombre_tipo, Nombre_Estado, Nombre_Operatoria_Comercial FROM Propiedad as P JOIN Propietario as Pro on P.Id_Propietario=Pro.Id_Propietario JOIN Tipo as T on P.Id_Tipo=T.Id_Tipo JOIN Estado as E on P.Id_Estado=E.Id_Estado JOIN OperatoriaComercial as O on P.Id_Operacion_Comercial=O.Id_Operatoria_Comercial WHERE P.Id_Estado= 1 AND P.Id_Operacion_Comercial= 1 ")
+                lista = cursor.fetchall()
+                head = ['Id', 'Tipo', 'Estado', 'Operatoria', 'Ambientes', 'Direccion',
+                        'Localidad', 'Dueño', 'Direccion', 'Contacto', ]
+                tabla = []
+                for x in lista:
+                    tabla.append([x[0], x[7], x[8], x[9], x[1],
+                                  x[2], x[3], x[4], x[5], x[6]])
+
+                print(tabulate(tabla, tablefmt="fancy_outline", headers=head))
+
+            except Exception as e:
+                print(
+                    "Error al listar las propiedades disponibles para alquiler: ", str(e))
+
+   
 
 if __name__ == '__main__':
     print("Soy la Clase Propiedad")
