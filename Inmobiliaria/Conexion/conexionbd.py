@@ -7,10 +7,10 @@ class conexion: # Clase conexion
             self.conexion = mysql.connector.connect(
                 host='localhost',
                 port=3306,
-                user='root',    # Ingrese su usuario AQUI si es diferente
-                password='',    # Ingrese su password AQUI
-                db='            # Ingrese el nobre de la base de datos AQUI
-            )
+                user='root',    # CAMBIE SU USUARIO AQUI si es diferente
+                password='',    # INGRESE SU CONTRASEÑA AQUI
+                db=''  # IINGRESE AQUI EL NOMBRE DE SU BASE DE DATOS
+                )           
         except mysql.connector.Error as err:
             print('Error al conectar a la Base de Datos')
             print(err)
