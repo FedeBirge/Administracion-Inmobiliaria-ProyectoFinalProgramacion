@@ -7,3 +7,5 @@
 
 ![Doc_Inmobiliaria_page-0004](https://user-images.githubusercontent.com/104568843/199644351-d995c2e0-6dff-4faf-8bbd-8a9f3d8daf9c.jpg)
 
+![Doc_Inmobiliaria_page-0005](https://user-images.githubusercontent.com/104568843/199644768-ea899c84-43c0-4336-841c-56e0576b3ad7.jpg)
+
