@@ -279,4 +279,45 @@ class propiedad:   # Creamos la clase Propiedad
 
 
 if __name__ == '__main__':
-    print("Soy la Clase Propiedad")
+    print("Soy la Clase Propiedad")def ListarPropiedadesVendidas(self):
+        cone = conexion()
+        if cone.conectado():
+            try:
+
+                cursor = cone.conexion.cursor()
+                cursor.execute("SELECT Id_Propiedad, Ambientes, P.Direccion, Localidad, Nombre, Pro.Direccion, Contacto, Nombre_tipo, Nombre_Estado, Nombre_Operatoria_Comercial FROM Propiedad as P JOIN Propietario as Pro on P.Id_Propietario=Pro.Id_Propietario JOIN Tipo as T on P.Id_Tipo=T.Id_Tipo JOIN Estado as E on P.Id_Estado=E.Id_Estado JOIN OperatoriaComercial as O on P.Id_Operacion_Comercial=O.Id_Operatoria_Comercial WHERE P.Id_Estado= 3 ")
+                lista = cursor.fetchall()
+                head = ['Id', 'Tipo', 'Estado', 'Operatoria', 'Ambientes', 'Direccion',
+                        'Localidad', 'Dueño', 'Direccion', 'Contacto', ]
+                tabla = []
+                for x in lista:
+                    tabla.append([x[0], x[7], x[8], x[9], x[1],
+                                  x[2], x[3], x[4], x[5], x[6]])
+
+                print(tabulate(tabla, tablefmt="fancy_outline", headers=head))
+
+            except Exception as e:
+                print("Error al listar las propiedades vendidas: ", str(e))
+
+    # Metodo para listar las propiedades vendidas(opcion 9 del menu)
+    def ListarPropiedadesAlquiladas(self):
+        cone = conexion()
+        if cone.conectado():
+            try:
+
+                cursor = cone.conexion.cursor()
+                cursor.execute("SELECT Id_Propiedad, Ambientes, P.Direccion, Localidad, Nombre, Pro.Direccion, Contacto, Nombre_tipo, Nombre_Estado, Nombre_Operatoria_Comercial FROM Propiedad as P JOIN Propietario as Pro on P.Id_Propietario=Pro.Id_Propietario JOIN Tipo as T on P.Id_Tipo=T.Id_Tipo JOIN Estado as E on P.Id_Estado=E.Id_Estado JOIN OperatoriaComercial as O on P.Id_Operacion_Comercial=O.Id_Operatoria_Comercial WHERE P.Id_Estado= 2 ")
+                lista = cursor.fetchall()
+                head = ['Id', 'Tipo', 'Estado', 'Operatoria', 'Ambientes', 'Direccion',
+                        'Localidad', 'Dueño', 'Direccion', 'Contacto', ]
+                tabla = []
+                for x in lista:
+                    tabla.append([x[0], x[7], x[8], x[9], x[1],
+                                  x[2], x[3], x[4], x[5], x[6]])
+
+                print(tabulate(tabla, tablefmt="fancy_outline", headers=head))
+
+            except Exception as e:
+                print("Error al listar las propiedades alquiladas: ", str(e))
+    
+
